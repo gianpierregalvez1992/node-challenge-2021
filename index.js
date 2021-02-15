@@ -4,8 +4,8 @@ const app = require("express")();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-// const databaseConnect = require("./database");
-// const { router } = require('./router');
+const databaseConnect = require("./database");
+const { routes } = require("./src/routes");
 const appConfig = require("./config");
 
 // MIDDLEWARES
@@ -16,10 +16,10 @@ app.use(bodyParser.json());
 // app.locals.basedir = appConfig.path + "/assets";
 
 /// ROUTES
-// app.use('/api', router);
+app.use("/api", routes);
 //////
 
-// databaseConnect();
+databaseConnect();
 //////
 
 const listener = app.listen(appConfig.port, () => {
