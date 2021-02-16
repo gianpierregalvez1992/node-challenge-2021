@@ -1,10 +1,5 @@
 const VideosService = require("./videos.service");
-const {
-	storeValidation,
-	updateValidation,
-	deleteValidation,
-	listByUserValidation,
-} = require("./videos.validations");
+const { storeValidation, updateValidation } = require("./videos.validations");
 
 exports.store = async function (request, response, next) {
 	const { error } = await storeValidation(request.body);
