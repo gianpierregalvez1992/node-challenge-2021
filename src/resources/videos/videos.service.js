@@ -10,9 +10,9 @@ exports.store = async function (data) {
 	}
 };
 
-exports.update = async function (data) {
+exports.update = async function (_id, data) {
 	try {
-		let model = await Video.findOneAndUpdate({ _id: data._id }, data);
+		let model = await Video.findOneAndUpdate({ _id }, data);
 		return model;
 	} catch (e) {
 		throw Error(e);

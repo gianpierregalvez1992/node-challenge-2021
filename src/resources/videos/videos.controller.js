@@ -33,13 +33,12 @@ exports.update = async function (request, response, next) {
 		let error_response = {
 			error: true,
 			details: error.details,
-			data: request.body,
 		};
 		return response.status(422).send(error_response);
 	}
 
 	try {
-		await VideosService.update(request.body);
+		await VideosService.update(request.params._id, request.body);
 
 		return response
 			.status(200)
@@ -50,17 +49,8 @@ exports.update = async function (request, response, next) {
 };
 
 exports.listByUser = async function (request, response, next) {
-	const { error } = await listByUserValidation(request.body);
-	if (error) {
-		let error_response = {
-			error: true,
-			details: error.details,
-		};
-		return response.status(422).send(error_response);
-	}
-
 	try {
-		const videos = await VideosService.listByUser(request.body.user);
+		const videos = await VideosService.listByUser(request.params.user);
 
 		const responseData = {
 			error: false,
@@ -73,17 +63,8 @@ exports.listByUser = async function (request, response, next) {
 };
 
 exports.delete = async function (request, response, next) {
-	const { error } = await deleteValidation(request.body);
-	if (error) {
-		let error_response = {
-			error: true,
-			details: error.details,
-		};
-		return response.status(422).send(error_response);
-	}
-
 	try {
-		await VideosService.delete(request.body);
+		await VideosService.delete(request.params._id);
 
 		return response
 			.status(200)

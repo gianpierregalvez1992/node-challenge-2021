@@ -34,11 +34,6 @@ const storeValidation = async (data) => {
 
 const updateValidation = async (data) => {
 	const schema = Joi.object({
-		_id: Joi.string().required().messages({
-			"string.base": `El id es obligatorio `,
-			"string.empty": `El id es obligatorio`,
-			"any.required": `El id es obligatorio`,
-		}),
 		user: Joi.string().required().messages({
 			"string.base": `El usuario es obligatorio `,
 			"string.empty": `El usuario es obligatorio`,
@@ -69,29 +64,5 @@ const updateValidation = async (data) => {
 	return schema.validate(data, { abortEarly: false });
 };
 
-const listByUserValidation = async (data) => {
-	const schema = Joi.object({
-		user: Joi.string().required().messages({
-			"string.base": `El usuario es obligatorio `,
-			"string.empty": `El usuario es obligatorio`,
-			"any.required": `El usuario es obligatorio`,
-		}),
-	});
-	return schema.validate(data, { abortEarly: false });
-};
-
-const deleteValidation = async (data) => {
-	const schema = Joi.object({
-		_id: Joi.string().required().messages({
-			"string.base": `El id es obligatorio `,
-			"string.empty": `El id es obligatorio`,
-			"any.required": `El id es obligatorio`,
-		}),
-	});
-	return schema.validate(data, { abortEarly: false });
-};
-
 module.exports.storeValidation = storeValidation;
 module.exports.updateValidation = updateValidation;
-module.exports.listByUserValidation = listByUserValidation;
-module.exports.deleteValidation = deleteValidation;
