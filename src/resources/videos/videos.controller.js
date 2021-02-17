@@ -12,11 +12,15 @@ exports.store = async function (request, response, next) {
 	}
 
 	try {
-		await VideosService.store(request.body);
+		const video = await VideosService.store(request.body);
 
 		return response
 			.status(200)
-			.json({ error: false, message: "Video agregado correctamente" });
+			.json({
+				error: false,
+				message: "Video agregado correctamente",
+				videoId: video._id,
+			});
 	} catch (e) {
 		return response.status(400).json({ status: 400, message: e.message });
 	}
