@@ -3,7 +3,6 @@ const appConfig = require("./config");
 
 const databaseConnect = async (config = appConfig) => {
 	try {
-		console.log(config);
 		await mongoose.connect(config.database, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
