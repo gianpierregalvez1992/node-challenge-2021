@@ -4,11 +4,11 @@ const { createValidation, updateValidation } = require("../Validations/Video");
 const create = async function (request, response, next) {
 	const { error } = await createValidation(request.body);
 	if (error) {
-		let error_response = {
+		let errorResponse = {
 			error: true,
 			details: error.details,
 		};
-		return response.status(422).json(error_response);
+		return response.status(422).json(errorResponse);
 	}
 
 	try {
@@ -29,11 +29,11 @@ const create = async function (request, response, next) {
 const update = async function (request, response, next) {
 	const { error } = await updateValidation(request.body);
 	if (error) {
-		let error_response = {
+		let errorResponse = {
 			error: true,
 			details: error.details,
 		};
-		return response.status(422).send(error_response);
+		return response.status(422).send(errorResponse);
 	}
 
 	try {

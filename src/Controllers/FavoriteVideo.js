@@ -7,11 +7,11 @@ const create = async function (request, response, next) {
 		...request.params,
 	});
 	if (error) {
-		let error_response = {
+		let errorResponse = {
 			error: true,
 			details: error.details,
 		};
-		return response.status(422).json(error_response);
+		return response.status(422).json(errorResponse);
 	}
 
 	try {
