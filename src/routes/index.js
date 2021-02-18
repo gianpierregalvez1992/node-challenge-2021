@@ -1,6 +1,8 @@
 const router = require("express").Router();
-const videosRoute = require("../resources/videos/videos.router");
-const favoriteVideosRoute = require("../resources/favoriteVideos/favoriteVideos.router");
+const videosRoute = require("./Video");
+const usersRoute = require("./USer");
+
 router.use("/videos", videosRoute);
-router.use("/favoriteVideos", favoriteVideosRoute);
+router.use("/users", usersRoute);
+
 module.exports.routes = router;

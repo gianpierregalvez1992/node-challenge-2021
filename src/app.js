@@ -2,8 +2,7 @@ const app = require("express")();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const databaseConnect = require("../database");
-const { routes } = require("./routes");
-const appConfig = require("../config");
+const { routes } = require("./Routes");
 
 // MIDDLEWARES
 app.use(cors());
@@ -15,9 +14,5 @@ app.use("/api", routes);
 
 databaseConnect();
 //////
-
-// const listener = app.listen(appConfig.port, () => {
-// 	console.log(`Listening on http://localhost:${listener.address().port}`);
-// });
 
 module.exports = app;

@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const storeValidation = async (data) => {
+const createValidation = async (data) => {
 	const schema = Joi.object({
 		user: Joi.string().required().messages({
 			"string.base": `El usuario es obligatorio `,
@@ -64,5 +64,5 @@ const updateValidation = async (data) => {
 	return schema.validate(data, { abortEarly: false });
 };
 
-module.exports.storeValidation = storeValidation;
+module.exports.createValidation = createValidation;
 module.exports.updateValidation = updateValidation;

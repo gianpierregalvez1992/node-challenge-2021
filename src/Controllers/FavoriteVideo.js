@@ -1,18 +1,21 @@
-const FavoriteVideosService = require("./favoriteVideos.service");
-const { storeValidation } = require("./favoriteVideos.validations");
+const FavoriteVideo = require("../Models/FavoriteVideo");
+const { createValidation } = require("../Validations/FavoriteVideo");
 
-exports.store = async function (request, response, next) {
-	const { error } = await storeValidation(request.body);
+const create = async function (request, response, next) {
+	const { error } = await createValidation({
+		...request.body,
+		...request.params,
+	});
 	if (error) {
 		let error_response = {
 			error: true,
 			details: error.details,
 		};
-		return response.status(422).send(error_response);
+		return response.status(422).json(error_response);
 	}
 
 	try {
-		await FavoriteVideosService.store(request.body);
+		await new FavoriteVideo().create({ ...request.body, ...request.params });
 
 		return response
 			.status(200)
@@ -22,9 +25,9 @@ exports.store = async function (request, response, next) {
 	}
 };
 
-exports.listByUser = async function (request, response, next) {
+const listByUser = async function (request, response, next) {
 	try {
-		const favoriteVideos = await FavoriteVideosService.listByUser(
+		const favoriteVideos = await new FavoriteVideo().listByUser(
 			request.params.user
 		);
 
@@ -38,9 +41,9 @@ exports.listByUser = async function (request, response, next) {
 	}
 };
 
-exports.delete = async function (request, response, next) {
+const destroy = async function (request, response, next) {
 	try {
-		await FavoriteVideosService.delete(request.params._id);
+		await new FavoriteVideo().delete(request.params._id);
 
 		return response.status(200).json({
 			error: false,
@@ -50,3 +53,7 @@ exports.delete = async function (request, response, next) {
 		return response.status(400).json({ status: 400, message: e.message });
 	}
 };
+
+module.exports.create = create;
+module.exports.listByUser = listByUser;
+module.exports.destroy = destroy;

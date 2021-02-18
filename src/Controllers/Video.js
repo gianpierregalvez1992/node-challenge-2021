@@ -1,32 +1,32 @@
-const VideosService = require("./videos.service");
-const { storeValidation, updateValidation } = require("./videos.validations");
+const Video = require("../Models/Video");
+const { createValidation, updateValidation } = require("../Validations/Video");
 
-exports.store = async function (request, response, next) {
-	const { error } = await storeValidation(request.body);
+const create = async function (request, response, next) {
+	const { error } = await createValidation(request.body);
 	if (error) {
 		let error_response = {
 			error: true,
 			details: error.details,
 		};
-		return response.status(422).send(error_response);
+		return response.status(422).json(error_response);
 	}
 
 	try {
-		const video = await VideosService.store(request.body);
+		const video = await new Video().create(request.body);
 
-		return response
-			.status(200)
-			.json({
-				error: false,
-				message: "Video agregado correctamente",
-				videoId: video._id,
-			});
+		return response.status(200).json({
+			error: false,
+			message: "Video agregado correctamente",
+			data: {
+				video,
+			},
+		});
 	} catch (e) {
 		return response.status(400).json({ status: 400, message: e.message });
 	}
 };
 
-exports.update = async function (request, response, next) {
+const update = async function (request, response, next) {
 	const { error } = await updateValidation(request.body);
 	if (error) {
 		let error_response = {
@@ -37,7 +37,7 @@ exports.update = async function (request, response, next) {
 	}
 
 	try {
-		await VideosService.update(request.params._id, request.body);
+		await new Video().update(request.params._id, request.body);
 
 		return response
 			.status(200)
@@ -47,9 +47,9 @@ exports.update = async function (request, response, next) {
 	}
 };
 
-exports.listByUser = async function (request, response, next) {
+const listByUser = async function (request, response, next) {
 	try {
-		const videos = await VideosService.listByUser(request.params.user);
+		const videos = await new Video().listByUser(request.params.user);
 
 		const responseData = {
 			error: false,
@@ -61,9 +61,9 @@ exports.listByUser = async function (request, response, next) {
 	}
 };
 
-exports.delete = async function (request, response, next) {
+const destroy = async function (request, response, next) {
 	try {
-		await VideosService.delete(request.params._id);
+		await new Video().delete(request.params._id);
 
 		return response
 			.status(200)
@@ -72,3 +72,8 @@ exports.delete = async function (request, response, next) {
 		return response.status(400).json({ status: 400, message: e.message });
 	}
 };
+
+module.exports.create = create;
+module.exports.update = update;
+module.exports.listByUser = listByUser;
+module.exports.destroy = destroy;
