@@ -74,14 +74,14 @@ const supertest = require("supertest");
 const request = supertest(app);
 
 describe("Test the root path", () => {
-	it("AAAAAAAAAAAAA", async (done) => {
-		done();
-		// request
-		// 	.post("/api/videos")
-		// 	.send({})
-		// 	.then((response) => {
-		// 		// expect(response.statusCode).toBe(422);
-		// 		done();
-		// 	});
+	it("testing", async (done) => {
+		// done();
+		request
+			.post("/api/videos")
+			.send({})
+			.then((response) => {
+				expect(response.statusCode).toBe(422);
+				done();
+			});
 	});
 });
