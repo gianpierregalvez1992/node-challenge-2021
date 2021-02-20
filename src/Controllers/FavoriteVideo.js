@@ -15,11 +15,18 @@ const create = async function (request, response, next) {
 	}
 
 	try {
-		await new FavoriteVideo().create({ ...request.body, ...request.params });
+		const favoriteVideo = await new FavoriteVideo().create({
+			...request.body,
+			...request.params,
+		});
 
-		return response
-			.status(200)
-			.json({ error: false, message: "Video favorito agregado correctamente" });
+		return response.status(200).json({
+			error: false,
+			message: "Video favorito agregado correctamente",
+			data: {
+				favoriteVideo,
+			},
+		});
 	} catch (e) {
 		return response.status(400).json({ status: 400, message: e.message });
 	}
